@@ -31,4 +31,4 @@ export default function FishingBoat(props: GroupProps) {
   )
 }
 
-useGLTF.preload('/NWW83WKS0AJC0W7C1XP0CFCET.gltf')
+useGLTF.preload(gltf)
