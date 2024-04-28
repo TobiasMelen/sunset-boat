@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v1
-      - run: bun run install
+      - run: bun install
       - run: bun run build
       - uses: actions/upload-artifact@v4
         with:
