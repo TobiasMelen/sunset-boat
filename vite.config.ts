@@ -5,5 +5,5 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   base: "/sunset-boat/",
   plugins: [react()],
-  assetsInclude: ["**/*.gltf", "**/*.hdr"],
+  assetsInclude: ["**/*.gltf", "**/*.hdr", "**/*.glb"],
 });
