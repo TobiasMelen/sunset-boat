@@ -6,6 +6,7 @@ import { useGLTF } from "@react-three/drei";
 import { GroupProps } from "@react-three/fiber";
 import { useRef } from "react";
 import { Group } from "three";
+import ClickForQrCode from "./ClickForQrCode";
 import glb from "./assets/fishing-boat.glb";
 import { useMoveControls, useSurfaceBobbing } from "./useBoatThings";
 
@@ -14,23 +15,31 @@ export default function FishingBoat(props: GroupProps) {
   const group = useRef<Group>(null);
   const shipBodyGroup = useRef<Group>(null);
   useSurfaceBobbing(shipBodyGroup);
-  useMoveControls(group);
+  const addMoveMomentum = useMoveControls(group);
+  
   return (
-    <group {...props} dispose={null} ref={group} castShadow>
-      <group ref={shipBodyGroup}>
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.node0.geometry}
-          material={materials["mat_0-default-grey.jpg"]}
-        />
-        <mesh
-          castShadow
-          receiveShadow
-          geometry={nodes.node1.geometry}
-          material={materials["mat_1-boat_fishing02.jpg"]}
-        />
-      </group>
+    <group
+      {...props}
+      dispose={null}
+      ref={group}
+      castShadow
+    >
+      <ClickForQrCode onInput={addMoveMomentum}>
+        <group ref={shipBodyGroup}>
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.node0.geometry}
+            material={materials["mat_0-default-grey.jpg"]}
+          />
+          <mesh
+            castShadow
+            receiveShadow
+            geometry={nodes.node1.geometry}
+            material={materials["mat_1-boat_fishing02.jpg"]}
+          />
+        </group>
+        </ClickForQrCode>
     </group>
   );
 }

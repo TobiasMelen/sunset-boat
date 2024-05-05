@@ -17,8 +17,8 @@ export default function usePostprocessing() {
     // Bokeh
     const bokehPass = new BokehPass(scene, camera, {
       focus: 3,
-      aperture: 0.0003,
-      maxblur: 0.005,
+      aperture: 0.00035,
+      maxblur: 0.0035,
     });
     bokehPass.renderToScreen = true;
     composer.addPass(bokehPass);

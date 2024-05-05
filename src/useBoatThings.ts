@@ -1,5 +1,5 @@
 import { useFrame } from "@react-three/fiber";
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { Group, MathUtils, Vector3 } from "three";
 
 const momentumDecay = 1750;
@@ -38,6 +38,16 @@ export function useMoveControls(bodyRef: React.RefObject<Group>) {
         0.05
     );
   });
+  
+  const addMomentum = useCallback((direction: string, activate: boolean) => {
+    const previousMomentum =
+      momentumDecay * calculateMomentum(false, movement.current[direction][1]);
+    movement.current[direction] = [
+      activate,
+      performance.now() - previousMomentum,
+    ];
+  }, []);
+
   useEffect(() => {
     const handleKeyEvent = (pressDown: boolean) => (event: KeyboardEvent) => {
       const direction = keys.find(([, keys]) =>
@@ -50,14 +60,7 @@ export function useMoveControls(bodyRef: React.RefObject<Group>) {
       if (event.repeat) {
         return;
       }
-
-      const previousMomentum =
-        momentumDecay *
-        calculateMomentum(false, movement.current[direction][1]);
-      movement.current[direction] = [
-        pressDown,
-        performance.now() - previousMomentum,
-      ];
+      addMomentum(direction, pressDown);
     };
     const onKeyPress = handleKeyEvent(true);
     const onKeyUp = handleKeyEvent(false);
@@ -67,7 +70,8 @@ export function useMoveControls(bodyRef: React.RefObject<Group>) {
       window.removeEventListener("keydown", onKeyPress);
       window.removeEventListener("keyup", onKeyUp);
     };
-  }, []);
+  }, [addMomentum]);
+  return addMomentum;
 }
 
 export function useSurfaceBobbing(ref: React.RefObject<Group>) {

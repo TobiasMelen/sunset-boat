@@ -1,15 +1,18 @@
 import { MeshProps } from "@react-three/fiber";
 import { useMemo } from "react";
 import {
-  VideoTexture,
-  RepeatWrapping,
+  CubeReflectionMapping,
   MathUtils,
-  ObjectSpaceNormalMap,
+  RepeatWrapping,
+  Texture,
+  VideoTexture
 } from "three";
-import x265Video from "./assets/water-x265.mp4";
 import x264Video from "./assets/water-x264.mp4";
+import x265Video from "./assets/water-x265.mp4";
 
-export default function WaterPlane(props: MeshProps) {
+export default function WaterPlane(
+  props: MeshProps & { mirrorTexture: Texture }
+) {
   const videoNormalMap = useMemo(() => {
     const video = document.createElement("video");
     const x265Source = document.createElement("source");
@@ -32,14 +35,18 @@ export default function WaterPlane(props: MeshProps) {
 
     return texture;
   }, []);
+  props.mirrorTexture.mapping = CubeReflectionMapping
   return (
     <mesh {...props} rotation={[MathUtils.degToRad(-90), 0, 0]} receiveShadow>
       <planeGeometry args={[1000, 1000]} />
       <meshStandardMaterial
+        
         normalMap={videoNormalMap}
-        normalMapType={ObjectSpaceNormalMap}
-        metalness={1}
+        normalMapType={1}
+        // distortionMap={videoNormalMap}
+        metalness={0.5}
         roughness={0}
+        envMap={props.mirrorTexture}
       ></meshStandardMaterial>
     </mesh>
   );
