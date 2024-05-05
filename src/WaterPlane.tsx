@@ -44,7 +44,7 @@ export default function WaterPlane(
         normalMap={videoNormalMap}
         normalMapType={1}
         // distortionMap={videoNormalMap}
-        metalness={0.5}
+        metalness={0.25}
         roughness={0}
         envMap={props.mirrorTexture}
       ></meshStandardMaterial>
