@@ -25,7 +25,7 @@ export default function usePostprocessing() {
     composerRef.current = composer;
   });
   useFrame(({ gl }) => {
-    gl.autoClear = false;
+    //gl.autoClear = false;
     composerRef.current?.render();
   }, 2);
 }
