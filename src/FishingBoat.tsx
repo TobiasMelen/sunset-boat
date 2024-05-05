@@ -16,14 +16,9 @@ export default function FishingBoat(props: GroupProps) {
   const shipBodyGroup = useRef<Group>(null);
   useSurfaceBobbing(shipBodyGroup);
   const addMoveMomentum = useMoveControls(group);
-  
+
   return (
-    <group
-      {...props}
-      dispose={null}
-      ref={group}
-      castShadow
-    >
+    <group {...props} dispose={null} ref={group} castShadow>
       <ClickForQrCode onInput={addMoveMomentum}>
         <group ref={shipBodyGroup}>
           <mesh
@@ -39,7 +34,7 @@ export default function FishingBoat(props: GroupProps) {
             material={materials["mat_1-boat_fishing02.jpg"]}
           />
         </group>
-        </ClickForQrCode>
+      </ClickForQrCode>
     </group>
   );
 }

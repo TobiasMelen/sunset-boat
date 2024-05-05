@@ -1,11 +1,10 @@
 import {
-  CubeCamera,
-  Environment
+  CubeCamera
 } from "@react-three/drei";
 import { useThree } from "@react-three/fiber";
 import { MathUtils } from "three";
 import FishingBoat from "./FishingBoat";
-import RotateScroller from "./RotateScroller";
+import ScrollableEnvironment from "./ScrollableEnvironment";
 import WaterPlane from "./WaterPlane";
 import usePostprocessing from "./usePostprocessing";
 
@@ -14,12 +13,10 @@ export default function Scene() {
     camera.rotation.set(MathUtils.degToRad(-25), 0, 0);
   });
   usePostprocessing();
-
   return (
-    <RotateScroller>
-      <Environment background preset="sunset" />
+    <ScrollableEnvironment>
       <FishingBoat
-        position={[5, 0, -5]}
+        position={[7, 0, -7]}
         scale={1.5}
         rotation={[0, MathUtils.degToRad(-90), 0]}
       />
@@ -28,6 +25,6 @@ export default function Scene() {
           <WaterPlane position={[0, 1.2, 0]} mirrorTexture={texture} />
         )}
       </CubeCamera>
-    </RotateScroller>
+    </ScrollableEnvironment>
   );
 }
